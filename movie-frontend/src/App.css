@@ -1,0 +1,49 @@
+.app {
+  text-align: center;
+  padding: 30px;
+  font-family: Arial, sans-serif;
+}
+
+.search-box {
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+}
+
+.search-box button {
+  padding: 10px 15px;
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
+.movie-card {
+  margin: 30px auto;
+  padding: 20px;
+  max-width: 700px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.movie-card img {
+  width: 200px;
+  border-radius: 10px;
+}
+
+.movie-details {
+  flex: 1;
+}
