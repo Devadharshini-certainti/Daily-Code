@@ -1,38 +1,76 @@
 const express = require("express");
 
 const app = express();
+const PORT = 5001;
+
 app.use(express.json());
 
-const PORT = 5000;
-
 app.use((req, res, next) => {
-  console.log(`Request: ${req.method} ${req.url}`);
+  console.log(`${req.method} ${req.url}`);
   next();
+});
+
+let users = [
+  { id: 1, name: "Dev", age: 22 },
+  { id: 2, name: "Ram", age: 25 }
+];
+
+app.get("/", (req, res) => {
+  res.send("User API is running");
+});
+
+app.get("/users", (req, res) => {
+  res.json(users);
+});
+
+app.get("/user", (req, res) => {
+  const userName = req.query.name;
+
+  if (!userName) {
+    return res.json({ message: "Name query is required" });
+  }
+
+  const foundUser = users.find(
+    (user) => user.name.toLowerCase() === userName.toLowerCase()
+  );
+
+  if (!foundUser) {
+    return res.json({ message: "User not found" });
+  }
+
+  res.json(foundUser);
 });
 
 app.post("/user", (req, res) => {
   try {
     const { name, age } = req.body;
 
-    if (!name) {
-      return res.json({ error: "Name is required" });
+    if (!name || !name.trim()) {
+      return res.json({ message: "Name is required" });
     }
 
-    if (!age) {
-      return res.json({ error: "Age is required" });
+    if (age === undefined) {
+      return res.json({ message: "Age is required" });
     }
 
     if (age < 0) {
-      return res.json({ error: "Age cannot be negative" });
+      return res.json({ message: "Age cannot be negative" });
     }
 
-    res.json({
-      message: "User created successfully",
-      user: { name, age }
-    });
+    const newUser = {
+      id: users.length + 1,
+      name,
+      age
+    };
 
+    users.push(newUser);
+
+    res.json({
+      message: "User added successfully",
+      user: newUser
+    });
   } catch (error) {
-    res.json({ error: "Something went wrong" });
+    res.json({ message: "Something went wrong" });
   }
 });
 
